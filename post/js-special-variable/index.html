@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Gridea</title>
+<title>Js 神奇的变量 | Gridea</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -12,16 +12,25 @@
 <link rel="stylesheet" href="https://tgezi.github.io/styles/main.css">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
-    <meta name="description" content="温故而知新">
-    
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    
+    <meta name="description" content="假设有个变量a，然后看以下判断:
+a === 1 // true
+a == 2 // true
+a == 3 &amp;&amp; a == 4 &amp;&amp; a == 5 // true
+a // 6
+a == 6 // fals..." />
+    <meta name="keywords" content="JavaScript" />
   </head>
   <body>
     <div id="app" class="main">
@@ -95,54 +104,66 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://tgezi.github.io/post/js-special-variable/">
-                  <h2 class="post-title">Js 神奇的变量</h2>
-                </a>
-                <div class="post-date">
-                  2021-07-11
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">Js 神奇的变量</h2>
+            <div class="post-date">2021-07-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/js-special-variable.jpeg')">
               </div>
-              
-                <a class="right" href="https://tgezi.github.io/post/js-special-variable/">
-                  <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/js-special-variable.jpeg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
+            
+            <div class="post-content" v-pre>
+              <p>假设有个变量a，然后看以下判断:</p>
+<pre><code class="language-javascript">a === 1 // true
+a == 2 // true
+a == 3 &amp;&amp; a == 4 &amp;&amp; a == 5 // true
+a // 6
+a == 6 // false
+</code></pre>
+<p>这个变量的原理就是不断自增，没当获取它的时候就自增1，要做到这个效果可以用数据劫持来做，就是Object.defineProperty</p>
+<pre><code class="language-javascript">var count = 1; // 用来自增的变量
+Object.defineProperty(window,&quot;a&quot;,{ // 第一个参数是要劫持的对象，第二个是属性名(变量名)，第三个是详细的配置
+    get(){  // 当获取值时的函数
+        value = count++; // 属性的值等于count自增后的结果
+        return value; // 返回结果
+    },
+    set(val){ // val是设置变量时，等号右边的值
+        value = val; // 将属性的值设为参数
+        return value; // 返回结果
+    }
+}); 
+</code></pre>
+<p>后面就可以实现这个&quot;万能变量&quot;了</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://tgezi.github.io/tag/7Ih44fNRZ/" class="tag">
+                    JavaScript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
                 <a href="https://tgezi.github.io/post/hello-gridea/">
-                  <h2 class="post-title">Hello Gridea</h2>
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
                 </a>
-                <div class="post-date">
-                  2021-07-11
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-                </div>
               </div>
-              
-                <a class="right" href="https://tgezi.github.io/post/hello-gridea/">
-                  <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/hello-gridea.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -168,6 +189,29 @@ var app = new Vue({
     hljs.initHighlightingOnLoad()
   </script>
 
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '4a05987c6d18285b01e2',
+        clientSecret: '9c8e032410b45493e233c5c75673d6fc6adffbaa',
+        repo: 'tgezi.github.io',
+        owner: 'tgezi',
+        admin: ['tgezi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
