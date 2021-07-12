@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>JavaScript | Gezi&#39;s Blog</title>
+<title>Js 数据劫持 | Gezi&#39;s Blog</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -12,13 +12,23 @@
 <link rel="stylesheet" href="https://tgezi.github.io/styles/main.css">
 
 
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
 
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
-    <meta name="description" content="温故而知新">
+    <meta name="description" content="数据劫持
+在上一章有讲数据劫持，就是&quot;Object.defineProperty&quot;，它的作用就是修改某个对象身上的属性的值
+var obj = {
+    url: &quot;tgezi.github.io&quot;..." />
+    <meta name="keywords" content="JavaScript" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,53 +102,71 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: JavaScript</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://tgezi.github.io/post/js-object-freeze&amp;defineproperty/">
-                  <h2 class="post-title">Js 数据劫持</h2>
-                </a>
-                <div class="post-date">
-                  2021-07-12
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">Js 数据劫持</h2>
+            <div class="post-date">2021-07-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/js-object-freeze&amp;defineproperty.jpeg')">
               </div>
-              
-                <a class="right" href="https://tgezi.github.io/post/js-object-freeze&amp;defineproperty/">
-                  <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/js-object-freeze&amp;defineproperty.jpeg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://tgezi.github.io/post/js-special-variable/">
-                  <h2 class="post-title">Js 神奇的变量</h2>
-                </a>
-                <div class="post-date">
-                  2021-07-11
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://tgezi.github.io/post/js-special-variable/">
-                  <div class="feature-container" style="background-image: url('https://tgezi.github.io/post-images/js-special-variable.jpeg')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
+            <div class="post-content" v-pre>
+              <h2 id="数据劫持">数据劫持</h2>
+<p>在上一章有讲数据劫持，就是&quot;Object.defineProperty&quot;，它的作用就是修改某个对象身上的属性的值</p>
+<pre><code class="language-javascript">var obj = {
+    url: &quot;tgezi.github.io&quot;,
+    server: &quot;github&quot;
+}
+Object.defineProperty(obj,&quot;url&quot;,{
+    get(){
+        return value; // 直接返回值
+    },
+    set(val){
+        console.log(&quot;你不能修改我&quot;); // 当被修改时，输出“你不能修改我”
+        return value; // 直接返回，不进行赋值
+    }
+}) // 修改obj对象的url属性的值
+</code></pre>
+<h2 id="数据冻结">数据冻结</h2>
+<p>如果是想让对象的所有属性都不能被修改，还有Object.freeze</p>
+<pre><code class="language-javascript">var obj = {
+    url: &quot;tgezi.github.io&quot;,
+    server: &quot;github&quot;
+}
+Object.freeze(obj);
+obj.url = &quot;&quot;;
+console.log(obj.url) // &quot;tgezi.github.io&quot;
+</code></pre>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://tgezi.github.io/tag/7Ih44fNRZ/" class="tag">
+                    JavaScript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://tgezi.github.io/post/js-special-variable/">
+                  <h3 class="post-title">
+                    Js 神奇的变量
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -164,6 +192,29 @@ var app = new Vue({
     hljs.initHighlightingOnLoad()
   </script>
 
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '4a05987c6d18285b01e2',
+        clientSecret: '9c8e032410b45493e233c5c75673d6fc6adffbaa',
+        repo: 'tgezi.github.io',
+        owner: 'tgezi',
+        admin: ['tgezi'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
